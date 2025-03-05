@@ -10,9 +10,10 @@
 	test \
 
 sandbox:
-	rm /tmp/pyproject.toml
-	uv run pyproject-tool pytest-log
-	bat /tmp/pyproject.toml
+	cp pyproject.toml sample.toml
+	uv run pyproject-tool pytest-log --file=sample.toml
+	bat sample.toml
+	rm sample.toml
 ### Default target(s)
 all: test run
 
