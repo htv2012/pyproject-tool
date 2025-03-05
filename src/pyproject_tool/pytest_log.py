@@ -3,10 +3,7 @@ import tomli_w
 import tomllib
 
 
-@click.command()
-@click.pass_context
-@click.option("-f", "--file", help="Path to pyproject.toml", default="pyproject.toml")
-def pytest_log(ctx: click.Context, file):
+def add_pytest_log(pytest_ini: dict):
     log_defaults = {
         "log_cli": True,
         "log_cli_level": "DEBUG",
@@ -17,15 +14,21 @@ def pytest_log(ctx: click.Context, file):
         "log_file_format": "%(levelname)-8s | %(name)s:%(message)s",
         "log_file_date_format": "%Y-%m-%d %H:%M:%S",
     }
-
-    with open(file, "rb") as stream:
-        data = tomllib.load(stream)
-
-    tool_table = data.setdefault("tool", {})
-    pytest_table = tool_table.setdefault("pytest", {})
-    ini_options = pytest_table.setdefault('ini_options', {})
     for key, value in log_defaults.items():
-        ini_options.setdefault(key, value)
+        pytest_ini.setdefault(key, value)
 
+
+@click.command()
+@click.pass_context
+@click.option("-f", "--file", help="Path to pyproject.toml", default="pyproject.toml")
+def pytest_log(ctx: click.Context, file):
+    with open(file, "rb") as stream:
+        config = tomllib.load(stream)
+    pytest_ini = (
+        config.setdefault("tool", {})
+        .setdefault("pytest", {})
+        .setdefault("ini_options", {})
+    )
+    add_pytest_log(pytest_ini)
     with open(file, "wb") as stream:
-        tomli_w.dump(data, stream)
+        tomli_w.dump(config, stream)
