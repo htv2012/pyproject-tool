@@ -11,9 +11,10 @@
 
 sandbox:
 	cp pyproject.toml sample.toml
-	uv run pyproject-tool pytest-log --file=sample.toml
+	uv run ppt pytest-log --file=sample.toml
 	bat sample.toml
 	rm sample.toml
+
 ### Default target(s)
 all: test run
 
@@ -46,8 +47,8 @@ rename:
 
 ### Run the project
 run: lint
-	PYTHONBREAKPOINT="pudb.set_trace" uv run pyproject-tool
-	PYTHONBREAKPOINT="pudb.set_trace" uv run pyproject-tool --version
+	PYTHONBREAKPOINT="pudb.set_trace" uv run ppt
+	PYTHONBREAKPOINT="pudb.set_trace" uv run ppt --version
 
 ### Run unit tests
 test: lint

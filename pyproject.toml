@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-pyproject-tool = "pyproject_tool:main"
+ppt = "pyproject_tool:main"
 
 [build-system]
 requires = ["hatchling"]
