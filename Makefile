@@ -9,6 +9,10 @@
 	run \
 	test \
 
+sandbox:
+	rm /tmp/pyproject.toml
+	uv run pyproject-tool pytest-log
+	bat /tmp/pyproject.toml
 ### Default target(s)
 all: test run
 
@@ -41,8 +45,8 @@ rename:
 
 ### Run the project
 run: lint
-	PYTHONBREAKPOINT="pudb.set_trace" uv run xyz
-	PYTHONBREAKPOINT="pudb.set_trace" uv run xyz --version
+	PYTHONBREAKPOINT="pudb.set_trace" uv run pyproject-tool
+	PYTHONBREAKPOINT="pudb.set_trace" uv run pyproject-tool --version
 
 ### Run unit tests
 test: lint
