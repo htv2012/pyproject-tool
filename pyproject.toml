@@ -32,6 +32,3 @@ dev = [
     "ruff>=0.9.7",
 ]
 
-[tool.pytest.ini_options]
-log_cli = false
-log_cli_level = "INFO"
