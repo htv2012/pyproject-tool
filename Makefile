@@ -47,7 +47,7 @@ run: lint
 
 sandbox:
 	cp pyproject.toml sample.toml
-	uv run ppt pytest-log --file=sample.toml
+	uv run ppt pytest-log sample.toml
 	bat sample.toml
 	rm sample.toml
 

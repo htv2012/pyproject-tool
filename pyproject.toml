@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-ppt = "pyproject_tool:main"
+ppt = "pyproject_tool.cli:main"
 pytest-log = "pyproject_tool.pytest_log:pytest_log"
 
 [build-system]

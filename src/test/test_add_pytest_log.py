@@ -2,7 +2,7 @@ import pathlib
 
 import pytest
 
-from pyproject_tool.pytest_log import add_pytest_log
+from pyproject_tool import add_pytest_log, update_config
 
 
 @pytest.mark.parametrize(
@@ -51,7 +51,7 @@ from pyproject_tool.pytest_log import add_pytest_log
     ],
 )
 def test_add_pytest_log(config, expected):
-    add_pytest_log(config)
+    update_config(config)
     assert config == expected
 
 
@@ -107,7 +107,15 @@ log_file_date_format = "%Y-%m-%d %H:%M:%S"
 )
 def test_modify_file(content: str, expected: str, tmp_path: pathlib.Path):
     file = tmp_path / "pyproject.toml"
-    file.write_text(content)
 
+    file.write_text(content)
     add_pytest_log(file)
-    assert file.read_text() == expected
+
+    new_content = file.read_text()
+    assert new_content == expected
+
+
+def test_modify_non_existent_file(tmp_path):
+    file = tmp_path / "pyproject.toml"
+    with pytest.raises(FileNotFoundError):
+        add_pytest_log(file)
