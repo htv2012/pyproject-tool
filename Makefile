@@ -7,10 +7,11 @@
 	py \
 	rename \
 	run \
+	sandbox \
 	test \
 
 ### Default target(s)
-all: test run
+all: test
 
 ### Clean up generated files
 clean:
@@ -41,8 +42,14 @@ rename:
 
 ### Run the project
 run: lint
-	PYTHONBREAKPOINT="pudb.set_trace" uv run xyz
-	PYTHONBREAKPOINT="pudb.set_trace" uv run xyz --version
+	PYTHONBREAKPOINT="pudb.set_trace" uv run ppt
+	PYTHONBREAKPOINT="pudb.set_trace" uv run ppt --version
+
+sandbox:
+	cp pyproject.toml sample.toml
+	uv run ppt pytest-log sample.toml
+	bat sample.toml
+	rm sample.toml
 
 ### Run unit tests
 test: lint
